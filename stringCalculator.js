@@ -22,7 +22,9 @@ function add(numbers) {
     extractDelimiterAndNumbers(numbers);
   const nums = numsString.split(delimiter).map(Number);
   handleNegativeNumbers(nums);
-  return nums.reduce((sum, num) => sum + Number(num), 0);
+  return nums
+    .filter((num) => num <= 1000)
+    .reduce((sum, num) => sum + Number(num), 0);
 }
 
 module.exports = { add };

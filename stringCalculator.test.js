@@ -37,4 +37,10 @@ describe("String Calculator", () => {
       expect(add("//;\n1;2")).toBe(3);
     });
   });
+
+  describe("Step 6", () => {
+    test("should ignore numbers greater than 1000", () => {
+      expect(add("2,1001")).toBe(2);
+    });
+  });
 });
