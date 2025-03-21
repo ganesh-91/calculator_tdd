@@ -1,13 +1,18 @@
-function add(numbers) {
-  if (numbers === "") return 0;
-  let delimiter = /[,\n]/;
+function extractDelimiterAndNumbers(numbers) {
   if (numbers.startsWith("//")) {
     const delimiterEndIndex = numbers.indexOf("\n");
-    delimiter = numbers.substring(2, delimiterEndIndex);
+    const delimiter = numbers.substring(2, delimiterEndIndex);
     numbers = numbers.substring(delimiterEndIndex + 1);
+    return { delimiter, numbers };
   }
+  return { delimiter: /[,\n]/, numbers };
+}
 
-  return numbers.split(delimiter).reduce((sum, num) => sum + Number(num), 0);
+function add(numbers) {
+  if (numbers === "") return 0;
+
+  const { delimiter, numbers: nums } = extractDelimiterAndNumbers(numbers);
+  return nums.split(delimiter).reduce((sum, num) => sum + Number(num), 0);
 }
 
 module.exports = { add };
