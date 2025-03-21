@@ -1,7 +1,7 @@
 function extractDelimiterAndNumbers(numbers) {
   if (numbers.startsWith("//")) {
     const delimiterEndIndex = numbers.indexOf("\n");
-    const delimiter = numbers.substring(2, delimiterEndIndex);
+    const delimiter = numbers.substring(3, delimiterEndIndex - 1);
     numbers = numbers.substring(delimiterEndIndex + 1);
     return { delimiter, numbers };
   }
