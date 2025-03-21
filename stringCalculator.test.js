@@ -31,4 +31,10 @@ describe("String Calculator", () => {
       expect(add("//;\n1;2")).toBe(3);
     });
   });
+
+  describe("Step 5", () => {
+    test("negative number will throw an exception", () => {
+      expect(add("//;\n1;2")).toBe(3);
+    });
+  });
 });
