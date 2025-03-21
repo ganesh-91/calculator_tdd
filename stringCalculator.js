@@ -1,11 +1,23 @@
+// this function can be more modularized.
 function extractDelimiterAndNumbers(numbers) {
-  if (numbers.startsWith("//")) {
-    const delimiterEndIndex = numbers.indexOf("\n");
-    const delimiter = numbers.substring(3, delimiterEndIndex - 1);
+  if (!numbers.startsWith("//")) {
+    return { delimiter: /[,\n]/, numbers };
+  }
+  const delimiterEndIndex = numbers.indexOf("\n");
+  const delimiterSection = numbers.substring(2, delimiterEndIndex);
+
+  if (delimiterSection.startsWith("[")) {
+    const delimiters = delimiterSection.match(/\[(.*?)\]/g);
+    if (delimiters) {
+      const delimiterList = delimiters.map((d) => d.slice(1, -1));
+      numbers = numbers.substring(delimiterEndIndex + 1);
+      return { delimiter: new RegExp(`[${delimiterList.join("")}]`), numbers };
+    }
+  } else {
+    const delimiter = delimiterSection;
     numbers = numbers.substring(delimiterEndIndex + 1);
     return { delimiter, numbers };
   }
-  return { delimiter: /[,\n]/, numbers };
 }
 
 function handleNegativeNumbers(numbers) {
@@ -20,8 +32,10 @@ function add(numbers) {
 
   const { delimiter, numbers: numsString } =
     extractDelimiterAndNumbers(numbers);
+
   const nums = numsString.split(delimiter).map(Number);
   handleNegativeNumbers(nums);
+
   return nums
     .filter((num) => num <= 1000)
     .reduce((sum, num) => sum + Number(num), 0);
