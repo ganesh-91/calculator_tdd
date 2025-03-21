@@ -9,5 +9,9 @@ describe("String Calculator", () => {
     test("returns number for an number string", () => {
       expect(add("1")).toBe(1);
     });
+
+    test("adds two numbers string", () => {
+      expect(add("1,5")).toBe(6);
+    });
   });
 });
